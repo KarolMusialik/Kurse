@@ -125,6 +125,9 @@ if __name__ == '__main__':
 
         print('clicked!', isin)
 
+    def DialogDateiAuswahlen():
+        filename = QtWidgets.QFileDialog.getOpenFileName(filter='*.csv')
+
 
     def MacheWeiter():
         if owindow.radioButton_produktion.isChecked():
@@ -164,6 +167,7 @@ if __name__ == '__main__':
     print(f'mainKurs: übergebene Parameter {sys.argv}')
     parameterDict = {}
     parameterDict['workDir'] = 'D:\\Python_Projekte\\Kurse\\'
+    parameterDict['workDirDateien'] = 'D:\\Python_Projekte\\Kurse\\Dateien\\'
     parameterDict['file_WindowEinstellungen'] = parameterDict.get('workDir') + 'WindowEinstellungen.ui'
     parameterDict['file_MyKursHauptfenster'] = parameterDict.get('workDir') + 'WindowKurseHauptfenster.ui'
     parameterDict['file_Fondsliste'] = parameterDict.get('workDir') + 'fondsliste.txt'
@@ -173,6 +177,11 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     file_ui = parameterDict.get('file_WindowEinstellungen')
     owindow = uic.loadUi(file_ui)
+    owindow.pushButton_weiter.clicked.connect(MacheWeiter)
+    owindow.pushButton_Ende.clicked.connect(SchliesseFenster)
+    owindow.pushButton_DialogDateiAuswaehlen.clicked.connect(DialogDateiAuswahlen)
+    owindow.lineEdit_FilterFonds.textChanged.connect(FilterEintragChanged)
+    owindow.comboBox_Fondsliste.currentTextChanged.connect(WechselDesEintrags)
 
     oMyKurs = MyKurs.MyKurs(parameterDict)
 
@@ -184,11 +193,6 @@ if __name__ == '__main__':
 
         aktuelleFondsliste = oMyKurs.GetListeAllerFonds()
         SchreibeAktuelleListeInComboBox()
-
-        owindow.pushButton_weiter.clicked.connect(MacheWeiter)
-        owindow.pushButton_Ende.clicked.connect(SchliesseFenster)
-        owindow.lineEdit_FilterFonds.textChanged.connect(FilterEintragChanged)
-        owindow.comboBox_Fondsliste.currentTextChanged.connect(WechselDesEintrags)
 
         owindow.show()
 

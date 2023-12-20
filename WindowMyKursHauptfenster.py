@@ -49,6 +49,7 @@ class WindowsMyKursHauptfenster:
         self.anzahlDerEintraegeInGroesstePositionen = 10  # Anzahl der Einträge im Dialog
 
 
+    def InitFenster(self, initDict):
         self.file_ui = initDict.get('file_MyKursHauptfenster')
         print(f'WindowsMyKursHauptfenster/__init__: die Infos zu dem Hauptfenster stehen in : {self.file_ui}')
 
@@ -81,6 +82,7 @@ class WindowsMyKursHauptfenster:
         else:
             print("indowsMyKursHauptfenster/__init__:Datei " + self.file_ui + " existiert nicht!!!. Das fuehrt zum Programmabbruch!")
             self.window = None
+
 
     def RufeFensterGroesstePositionenAuf(self):
         paramDict = {}

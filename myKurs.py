@@ -6,17 +6,22 @@ class MyKurs:
         self.parameterDict = parameterDict
         self.owindow = WindowMyKursHauptfenster.WindowsMyKursHauptfenster(self.parameterDict)
 
+
     def ZeigeFenster(self, isin):
         print('MyKurs/ZeigeFenster: hier soll der Dialog aufgerufen werden')
         self.RufeAlleFunktionenAuf(isin)
         self.owindow.zeigeFenster()
 
+
     def GetListeAllerFonds(self):
         liste = self.owindow.GetListeAllerFonds()
         return liste
 
+
     def SetISIN(self, isin):
         self.owindow.isin = isin
+
+
     def RufeAlleFunktionenAuf(self, isin):
         self.owindow.isin = isin
         self.owindow.InvestorTypeList()

@@ -122,7 +122,7 @@ def DialogDateiAuswahlen():
     owindow.label_NameDerDateiMitFondnamen.setText(fileName)
     LeseFondsliste()
 
-def MacheWeiter():
+def RufeKurseAuf():
     if owindow.radioButton_produktion.isChecked():
         parameterDict['environment'] = 'produktion'
         parameterDict['url_environment'] = 'https://fsl-framework.factsheetslive.com/fslmanager'
@@ -132,35 +132,37 @@ def MacheWeiter():
     else:
         parameterDict['environment'] = 'fehler'
         parameterDict['url_environment'] = 'fehler'
-
-    if Plausi() == 1:
-        sys.exit()
+        text = 'RufeKurseAuf: keine passende Umgebung ausgewählt. Fehler!'
+        oprot.SchreibeInProtokoll(text)
+        return
 
     isin = owindow.textEdit_isin.toPlainText()
-    parameterDict['isin'] = isin
-
-    oMyKurs.ZeigeFenster(isin)
-
-
-def Plausi():
-
-    msg = QMessageBox()
-    text = ''
-    if parameterDict['environment'] == 'fehler':
-        text = 'keine Umgebung (produktion oder Test) zugeordnet'
-
-    if text:
-        msg.setText(text)
-        msg.exec_()
-        return 1
+    if isin == '':
+        text = 'RufeKurseAuf: keine ISIN ausgewählt. Fehler!'
+        oprot.SchreibeInProtokoll(text)
+        return
     else:
-        return 0
+        parameterDict['isin'] = isin
+
+    nummer = NeueNummer()
+    oeistellung.SetKey(nummer)
+    text = f'RufeKurseAuf: es wurde ein Key für Einstellungen festgelegt: {nummer}'
+    oprot.SchreibeInProtokoll(text)
+    oeistellung.SchreibeInEinstellung(name='nummer', text=str(nummer))
+    oeistellung.SchreibeInEinstellung(name='isin', text=str(isin))
+    oeistellung.SchreibeInEinstellung(name='environment', text=parameterDict.get('environment'))
+    oeistellung.SchreibeInEinstellung(name='url_environment', text=parameterDict.get('url_environment'))
+    oeistellung.SchreibeInEinstellung(name='file_Fondsliste', text=parameterDict.get('file_Fondsliste'))
+
+    oMyKurs.ZeigeFenster(isin, parameterDict)
+
 
 def GetProtokollDateiName(parameterDict):
     fileDir = parameterDict.get('workDirProtokoll')
-    nummer = parameterDict.get('key_Einstellung')
+    nummer = parameterDict.get('key_Protokoll')
     fileName = fileDir + 'protokoll' + '_' + str(nummer) + '.txt'
     return fileName
+
 
 def NeueNummer():
     datum = datetime.date.today()
@@ -176,9 +178,11 @@ def NeueNummer():
     neuenummer = jahr + monat + tag + stunde + minute + sekunde
     return neuenummer
 
+
 def LeseLetzteEinstellung(name):
     wert = oeistellung.LeseLetzteEinstellung(name)
     return wert
+
 
 def BestimmeRunUmgebung():
     if owindow.radioButton_produktion.isChecked():
@@ -245,7 +249,7 @@ parameterDict['file_MyKursHauptfenster'] = parameterDict.get('workDir') + 'Windo
 parameterDict['environment'] = 'produktion'
 parameterDict['url_environment'] = 'https://fsl-framework.factsheetslive.com/fslmanager'
 parameterDict['file_Einstellung'] = parameterDict.get('workDir') + 'einstellung.csv'
-parameterDict['key_Einstellung'] = NeueNummer()
+parameterDict['key_Protokoll'] = NeueNummer()
 parameterDict['file_Protokoll'] = GetProtokollDateiName(parameterDict)
 
 oprot = protokoll.Protokoll(parameterDict.get('file_Protokoll'))  # das Protokoll wird angelegt
@@ -253,12 +257,11 @@ text = f'mainMaKurs: die parameter lauten: {str(parameterDict)}'
 oprot.SchreibeInProtokoll(text)
 
 oeistellung = einstellung.Einstellung(parameterDict)
-oeistellung.SchreibeInEinstellung(name='parameter', text=str(parameterDict))
 
 app = QtWidgets.QApplication(sys.argv)
 file_ui = parameterDict.get('file_WindowEinstellungen')
 owindow = uic.loadUi(file_ui)
-owindow.pushButton_weiter.clicked.connect(MacheWeiter)
+owindow.pushButton_weiter.clicked.connect(RufeKurseAuf)
 owindow.pushButton_Ende.clicked.connect(SchliesseFenster)
 owindow.pushButton_DialogDateiAuswaehlen.clicked.connect(DialogDateiAuswahlen)
 owindow.lineEdit_FilterFonds.textChanged.connect(FilterEintragChanged)
@@ -278,7 +281,10 @@ if len(sys.argv) >= 2:  # d.h. abgesehen vom Workdir werden weitere Arrgumente �
 else:
     isin_alt = LeseLetzteEinstellung('isin')  # Lese ISIN aus dem letzten Programmaufruf
     owindow.textEdit_isin.setText(isin_alt)  # Setzte die alte ISIN in das Dialog rein
-
+    file_Fondsliste_alt = LeseLetzteEinstellung('file_Fondsliste')  # Lese Fondsliste aus dem letzten Programmaufruf
+    owindow.label_NameDerDateiMitFondnamen.setText(file_Fondsliste_alt)  # Setzte die alte Fondsliste in das Dialog rein
+    parameterDict['file_Fondsliste'] = file_Fondsliste_alt
+    LeseFondsliste()
     owindow.show()
 
 app.exec_()

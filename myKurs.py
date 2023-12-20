@@ -7,8 +7,9 @@ class MyKurs:
         self.owindow = WindowMyKursHauptfenster.WindowsMyKursHauptfenster(self.parameterDict)
 
 
-    def ZeigeFenster(self, isin):
+    def ZeigeFenster(self, isin, initDict):
         print('MyKurs/ZeigeFenster: hier soll der Dialog aufgerufen werden')
+        self.owindow.InitFenster(initDict)
         self.RufeAlleFunktionenAuf(isin)
         self.owindow.zeigeFenster()
 

@@ -39,3 +39,43 @@ key;name;text
 20231220124148;parameter;{'workDir': 'D:\\Python_Projekte\\Kurse\\', 'workDirDateien': 'D:\\Python_Projekte\\Kurse\\Dateien\\', 'workDirProtokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\', 'file_WindowEinstellungen': 'D:\\Python_Projekte\\Kurse\\WindowEinstellungen.ui', 'file_MyKursHauptfenster': 'D:\\Python_Projekte\\Kurse\\WindowKurseHauptfenster.ui', 'environment': 'produktion', 'url_environment': 'https://fsl-framework.factsheetslive.com/fslmanager', 'file_Einstellung': 'D:\\Python_Projekte\\Kurse\\einstellung.csv', 'key_Einstellung': '20231220124148', 'file_Protokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\protokoll_20231220124148.txt'}
 20231220124230;parameter;{'workDir': 'D:\\Python_Projekte\\Kurse\\', 'workDirDateien': 'D:\\Python_Projekte\\Kurse\\Dateien\\', 'workDirProtokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\', 'file_WindowEinstellungen': 'D:\\Python_Projekte\\Kurse\\WindowEinstellungen.ui', 'file_MyKursHauptfenster': 'D:\\Python_Projekte\\Kurse\\WindowKurseHauptfenster.ui', 'environment': 'produktion', 'url_environment': 'https://fsl-framework.factsheetslive.com/fslmanager', 'file_Einstellung': 'D:\\Python_Projekte\\Kurse\\einstellung.csv', 'key_Einstellung': '20231220124230', 'file_Protokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\protokoll_20231220124230.txt'}
 20231220124508;parameter;{'workDir': 'D:\\Python_Projekte\\Kurse\\', 'workDirDateien': 'D:\\Python_Projekte\\Kurse\\Dateien\\', 'workDirProtokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\', 'file_WindowEinstellungen': 'D:\\Python_Projekte\\Kurse\\WindowEinstellungen.ui', 'file_MyKursHauptfenster': 'D:\\Python_Projekte\\Kurse\\WindowKurseHauptfenster.ui', 'environment': 'produktion', 'url_environment': 'https://fsl-framework.factsheetslive.com/fslmanager', 'file_Einstellung': 'D:\\Python_Projekte\\Kurse\\einstellung.csv', 'key_Einstellung': '20231220124508', 'file_Protokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\protokoll_20231220124508.txt'}
+20231220143915;parameter;{'workDir': 'D:\\Python_Projekte\\Kurse\\', 'workDirDateien': 'D:\\Python_Projekte\\Kurse\\Dateien\\', 'workDirProtokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\', 'file_WindowEinstellungen': 'D:\\Python_Projekte\\Kurse\\WindowEinstellungen.ui', 'file_MyKursHauptfenster': 'D:\\Python_Projekte\\Kurse\\WindowKurseHauptfenster.ui', 'environment': 'produktion', 'url_environment': 'https://fsl-framework.factsheetslive.com/fslmanager', 'file_Einstellung': 'D:\\Python_Projekte\\Kurse\\einstellung.csv', 'key_Einstellung': '20231220143915', 'file_Protokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\protokoll_20231220143915.txt'}
+20231220152946;nummer;20231220152946
+20231220152946;isin;DE000A2N8127
+20231220152946;environment;produktion
+20231220152946;url_environment;https://fsl-framework.factsheetslive.com/fslmanager
+20231220153836;nummer;20231220153836
+20231220153836;isin;DE0008474024
+20231220153836;environment;produktion
+20231220153836;url_environment;https://fsl-framework.factsheetslive.com/fslmanager
+20231220153836;file_Fondsliste;D:/Python_Projekte/Kurse/Dateien/fondsliste_20231220114221.txt
+20231220160435;nummer;20231220160435
+20231220160435;isin;LU2716752592
+20231220160435;environment;produktion
+20231220160435;url_environment;https://fsl-framework.factsheetslive.com/fslmanager
+20231220160435;file_Fondsliste;D:/Python_Projekte/Kurse/Dateien/fondsliste_20231220114221.txt
+20231220160506;nummer;20231220160506
+20231220160506;isin;LU2278487157
+20231220160506;environment;produktion
+20231220160506;url_environment;https://fsl-framework.factsheetslive.com/fslmanager
+20231220160506;file_Fondsliste;D:/Python_Projekte/Kurse/Dateien/fondsliste_20231220114221.txt
+20231220160631;nummer;20231220160631
+20231220160631;isin;LU0061928585
+20231220160631;environment;produktion
+20231220160631;url_environment;https://fsl-framework.factsheetslive.com/fslmanager
+20231220160631;file_Fondsliste;D:/Python_Projekte/Kurse/Dateien/fondsliste_20231220114221.txt
+20231220160834;nummer;20231220160834
+20231220160834;isin;LU1675428244
+20231220160834;environment;produktion
+20231220160834;url_environment;https://fsl-framework.factsheetslive.com/fslmanager
+20231220160834;file_Fondsliste;D:/Python_Projekte/Kurse/Dateien/fondsliste_20231220114221.txt
+20231220161040;nummer;20231220161040
+20231220161040;isin;LU0367087946
+20231220161040;environment;produktion
+20231220161040;url_environment;https://fsl-framework.factsheetslive.com/fslmanager
+20231220161040;file_Fondsliste;D:/Python_Projekte/Kurse/Dateien/fondsliste_20231220114221.txt
+20231220162309;nummer;20231220162309
+20231220162309;isin;LU1191063038
+20231220162309;environment;produktion
+20231220162309;url_environment;https://fsl-framework.factsheetslive.com/fslmanager
+20231220162309;file_Fondsliste;D:/Python_Projekte/Kurse/Dateien/fondsliste_20231220114221.txt

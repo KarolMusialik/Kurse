@@ -5,7 +5,10 @@ class Einstellung:
 
     def __init__(self, fileDict):
         self.file = fileDict.get('file_Einstellung')
-        self.key = fileDict.get('key_Einstellung')
+
+    def SetKey(self, key):
+        self.key = key
+
     def SchreibeInEinstellung(self, name, text):
 
         text = self.key + ";" + str(name) + ";" + str(text) + "\n"
@@ -39,17 +42,9 @@ class Einstellung:
             print(text)
             return wert
 
-        df2 = df1[df1.key != self.key]
-        if df2.empty:
-            wert = ''
-            text = f'Einstellung/LeseLetzteEinstellung: Kein Eintrag zu {str(name)} gefunden. Es wird null verwendet'
-            print(text)
-            return wert
-
-
-        if len(df2 == 1):  # alles okay. Es darf nur einen geben:
-            index = df2.index[0]
-            wert = df2.at[index, 'text']
+        if len(df1 == 1):  # alles okay. Es darf nur einen geben:
+            index = df1.index[0]
+            wert = df1.at[index, 'text']
             return wert
         else:  # ojej! es wurden mehrere Einträge gefunden. Fehler!
             wert = ''

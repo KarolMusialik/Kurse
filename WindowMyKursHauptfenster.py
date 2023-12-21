@@ -596,10 +596,14 @@ class WindowsMyKursHauptfenster:
 
         # jetzt werden die Daten zu den Holdings rausgeholt:
         tempJson2 = tempJson1.get('holdings')
-        tempListe = tempJson2.get('values')
-        self.holdings = tempListe
-        self.holdingsDatum = tempJson2.get('date')
-        print(f'holdings: {self.holdings} und Datum {self.holdingsDatum}')
+        if tempJson2 == None:
+            self.holdings = []
+            self.holdingsDatum = ''
+        else:
+            tempListe = tempJson2.get('values')
+            self.holdings = tempListe
+            self.holdingsDatum = tempJson2.get('date')
+            print(f'holdings: {self.holdings} und Datum {self.holdingsDatum}')
 
         # jetzt werden die Daten zu den indistries rausgeholt:
         tempJson2 = tempJson1.get('industries')

@@ -27,9 +27,9 @@ class MyKurs:
         self.owindow.isin = isin
         self.owindow.InvestorTypeList()
         self.owindow.InvestorCountryList()
-        self.owindow.PageList()
+        # self.owindow.PageList()
         self.owindow.EvaluatedPageList()
-        self.owindow.EvaluatedParameterCombinations()
+        # self.owindow.EvaluatedParameterCombinations()
         self.owindow.ProductList()
         self.owindow.HistoricPriceData()
         self.owindow.ProductData(isin)

@@ -116,7 +116,8 @@ def GetClickedCell(row, column):
     print('clicked!', isin)
 
 def DialogDateiAuswahlen():
-    ergebnis = QtWidgets.QFileDialog.getOpenFileName(filter='*.txt')
+    directory = parameterDict.get('workDirDateien')
+    ergebnis = QtWidgets.QFileDialog.getOpenFileName(filter='*.txt', directory=directory)
     fileName = ergebnis[0]
     parameterDict['file_Fondsliste'] = fileName
     owindow.label_NameDerDateiMitFondnamen.setText(fileName)

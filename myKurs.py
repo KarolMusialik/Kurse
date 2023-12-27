@@ -22,13 +22,17 @@ class MyKurs:
     def SetISIN(self, isin):
         self.owindow.isin = isin
 
+    def LeseInfosZuIsin(self, isinInfosDict):
+
+        self.owindow.LeseInfosZuIsin(isinInfosDict)
+
 
     def RufeAlleFunktionenAuf(self, isin):
-        self.owindow.isin = isin
-        self.owindow.InvestorTypeList()
-        self.owindow.InvestorCountryList()
+        self.owindow.isin = isin  # ISIN wird festgelegt
+        self.owindow.InvestorTypeList()  # InvestortypeCode und InvestorTypeName werden festgelegt
+        self.owindow.InvestorCountryList()  # Sprache wird eingestellt
         # self.owindow.PageList()
-        self.owindow.EvaluatedPageList()
+        # self.owindow.EvaluatedPageList()
         # self.owindow.EvaluatedParameterCombinations()
         self.owindow.ProductList()
         self.owindow.HistoricPriceData()

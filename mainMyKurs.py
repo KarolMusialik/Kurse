@@ -14,7 +14,7 @@ import protokoll
 def SchliesseFenster():
     owindow.close()
 
-def LeseFondsliste():
+def LeseFondsliste():  # die neue Fondsliste wir in die Combobox geschrieben
     datei = parameterDict.get('file_Fondsliste')
     datei_path = Path(datei)
 
@@ -62,7 +62,7 @@ def BelegeNeueFondslisteWegenFilter(s):
         i += 1
 
 
-def SchreibeAktuelleListeInComboBox():
+def SchreibeAktuelleListeInComboBox():  # die aktuelle Fondsliste wird in die Combobox geschrieben
     anzahl = len(aktuelleFondsliste)
     i = 0
     owindow.comboBox_Fondsliste.clear()
@@ -103,9 +103,19 @@ def LeseIsinAusEintrag(s):
 
 
 def WechselDesEintrags(s):
-    print('LeseisinAusEintrag: neuer Wert: '+ s)
+    print('WechselDesEintrags: neuer Wert: '+ s)
+    if s == '':
+        isinInfosDict.clear()
+        return
+
     isin = LeseIsinAusEintrag(s)
     owindow.textEdit_isin.setText(isin)
+
+    isinInfosDict.clear()
+    isinInfosDict['isin'] = isin
+    oMyKurs.LeseInfosZuIsin(isinInfosDict)  # hier werden Infos zu der ausgewählten isin geholt
+    IsinInfosDictZuDialog()
+
 
 
 def GetClickedCell(row, column):
@@ -115,13 +125,13 @@ def GetClickedCell(row, column):
 
     print('clicked!', isin)
 
-def DialogDateiAuswahlen():
+def DialogDateiAuswahlen():  # hier wird eine neue Fondsliste ausgewählt
     directory = parameterDict.get('workDirDateien')
     ergebnis = QtWidgets.QFileDialog.getOpenFileName(filter='*.txt', directory=directory)
     fileName = ergebnis[0]
     parameterDict['file_Fondsliste'] = fileName
     owindow.label_NameDerDateiMitFondnamen.setText(fileName)
-    LeseFondsliste()
+    LeseFondsliste()  # die neue Fondsliste wird in die Combobox geschrieben
 
 def RufeKurseAuf():
     if owindow.radioButton_produktion.isChecked():
@@ -237,10 +247,27 @@ def BestimmeAktuelleFondsliste():  # hier wird die Fondsliste bestimmt:
     elif owindow.radioButton_alteFondsliste_nein.isChecked():
         ErstelleNeueFondsliste()
 
+def IsinInfosDictZuDialog():
+    anzahlDerEintraege = len(isinInfosDict)
+    if anzahlDerEintraege <= 1:
+        print(f"IsinInfosDictZuDialog: keine Einträge vorhanden: {isinInfosDict}")
+        return
+
+    owindow.treeWidget_IsinInfosDict.clear()
+    owindow.treeWidget_IsinInfosDict.setHeaderLabels(["Name", "Wert"])
+
+    items = []
+    for key, value in isinInfosDict.items():
+        item = QtWidgets.QTreeWidgetItem([key, str(value)])
+        items.append(item)
+
+    owindow.treeWidget_IsinInfosDict.insertTopLevelItems(0, items)
 
 aktuelleFondsliste = []  # in dieser Liste wird die Fondsliste für das Combobox abgelegt. Diese Liste wird gefiltert
+isinInfosDict = {}  # hier werden Infos zu der Isin abgelegt. Die Infos werden dann im Dialog gezeigt.
 
-print(f'mainKurs: übergebene Parameter {sys.argv}')
+print(f'mainKurs: übergebene Parameter {sys.argv}')  # wurde das Programm mit Argumente aufgerufen?
+
 parameterDict = {}
 parameterDict['workDir'] = 'D:\\Python_Projekte\\Kurse\\'
 parameterDict['workDirDateien'] = 'D:\\Python_Projekte\\Kurse\\Dateien\\'
@@ -264,7 +291,7 @@ file_ui = parameterDict.get('file_WindowEinstellungen')
 owindow = uic.loadUi(file_ui)
 owindow.pushButton_weiter.clicked.connect(RufeKurseAuf)
 owindow.pushButton_Ende.clicked.connect(SchliesseFenster)
-owindow.pushButton_DialogDateiAuswaehlen.clicked.connect(DialogDateiAuswahlen)
+owindow.pushButton_DialogDateiAuswaehlen.clicked.connect(DialogDateiAuswahlen)  # hier wird die Foldsliste ausgewählt
 owindow.lineEdit_FilterFonds.textChanged.connect(FilterEintragChanged)
 owindow.comboBox_Fondsliste.currentTextChanged.connect(WechselDesEintrags)
 owindow.radioButton_produktion.toggled.connect(BestimmeRunUmgebung)
@@ -286,6 +313,9 @@ else:
     owindow.label_NameDerDateiMitFondnamen.setText(file_Fondsliste_alt)  # Setzte die alte Fondsliste in das Dialog rein
     parameterDict['file_Fondsliste'] = file_Fondsliste_alt
     LeseFondsliste()
+    isinInfosDict['isin'] = isin_alt
+    oMyKurs.LeseInfosZuIsin(isinInfosDict)  # hier werden Infos zu der ausgewählten isin geholt
+    IsinInfosDictZuDialog()
     owindow.show()
 
 app.exec_()

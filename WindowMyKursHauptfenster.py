@@ -466,6 +466,41 @@ class WindowsMyKursHauptfenster:
 
         print('ProductList: --- Ende ---:')
 
+    def LeseInfosZuIsin(self, isinInfosDict):
+        url = self.url + '/api/productList/'
+        resp = requests.get(url, proxies=self.proxies, auth=HTTPBasicAuth(self.user, self.password))
+        print('LeseInfosZuIsin: --- Beginn: ---')
+        print(resp.status_code)
+        #print(resp.content)
+
+        tempJson1 = json.loads(resp.text)  # Umwandlung von String  zu Json also Dict
+
+        if len(tempJson1) == 0:
+            print('LeseInfosZuIsin: keine Produktdaten vorhanden. --> Abbruch!')
+            print('LeseInfosZuIsin: --- Ende ---:')
+            return
+
+        isin = isinInfosDict.get('isin')
+        # jetzt werden die Daten zu isin eingeschränkt:
+        tempJson2 = tempJson1.get(isin)
+        print(tempJson2)
+        if len(tempJson2) == 0:
+            print('LeseInfosZuIsin: keine Produktdaten vorhanden. --> Abbruch!')
+            print('LeseInfosZuIsin: --- Ende ---:')
+            return
+
+        isinInfosDict['name'] = tempJson2.get('name')
+        isinInfosDict['nav'] = tempJson2.get('nav')
+        isinInfosDict['navDate'] = tempJson2.get('navDate')
+        isinInfosDict['currencyCode'] = tempJson2.get('currencyCode')
+        isinInfosDict['inceptionDate'] = tempJson2.get('inceptionDate')
+        isinInfosDict['distributionAppropriationDe'] = tempJson2.get('distributionAppropriationDe')
+        isinInfosDict['investorProfile'] = tempJson2.get('investorProfile')
+        isinInfosDict['kvg'] = tempJson2.get('kvg')
+        isinInfosDict['philosophyDe'] = tempJson2.get('philosophyDe')
+
+        print('LeseInfosZuIsin: --- Ende ---:')
+
     def PageList(self):
         url = self.url + '/api/pageList/'
         resp = requests.get(url, proxies=self.proxies, auth=HTTPBasicAuth(self.user, self.password))

@@ -1,6 +1,6 @@
 import os
 import PyQt5.uic as uic
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel, QTreeWidgetItem
 from PyQt5.QtGui import QPixmap, QIcon
 import requests
 from requests.auth import HTTPBasicAuth
@@ -45,6 +45,8 @@ class WindowsMyKursHauptfenster:
         self.investorProfile = ''
         self.kvg = ''
         self.philosophyDe = ''
+
+        self.DocumentsDict = {}  # hier werden Infos zu den vorhandenen Dokumente abgelegt
 
         self.anzahlDerEintraegeInGroesstePositionen = 10  # Anzahl der Einträge im Dialog
 
@@ -498,6 +500,7 @@ class WindowsMyKursHauptfenster:
         isinInfosDict['investorProfile'] = tempJson2.get('investorProfile')
         isinInfosDict['kvg'] = tempJson2.get('kvg')
         isinInfosDict['philosophyDe'] = tempJson2.get('philosophyDe')
+        isinInfosDict['performances'] = tempJson2.get('performances')
 
         print('LeseInfosZuIsin: --- Ende ---:')
 
@@ -610,9 +613,75 @@ class WindowsMyKursHauptfenster:
             return
 
         print(resp.text)
+        tempJson1 = json.loads(resp.text)  # Umwandlung von String  zu Json also Dict
+
+        if len(tempJson1) == 0:
+            print('Documents: keine Dokumente vorhanden. --> Abbruch!')
+            print('Documents: --- Ende ---:')
+            return
+
+        self.DocumentsDict.clear()
+        for doc in tempJson1:
+            type = doc.get('type')
+            self.DocumentsDict[type] = doc
+
+        #self.DocumentsDict['type'] = tempJson1[0]['type']
+        #self.DocumentsDict['name'] = tempJson1[0]['name']
+        #self.DocumentsDict['pattern'] = tempJson1[0]['pattern']
+        #self.DocumentsDict['downloadUrl'] = tempJson1[0]['downloadUrl']
+        #url = self.DocumentsDict.get('downloadUrl')
+        #resp = requests.get(url, proxies=self.proxies, auth=HTTPBasicAuth(self.user, self.password))
+
+        #self.DocumentsDict['filePDF'] = self.workDir + self.DocumentsDict.get('type') + '.pdf'
+        #print(f'Documents: das wurde gelesen: {self.DocumentsDict}')
+
+        #self.SchreibeTextInPDFFile(self.DocumentsDict.get('filePDF'), resp.text)
+        #print('Documents: --- Ende ---:')
 
 
-        print('Documents: --- Ende ---:')
+    def SchreibeDokumenteInsDialog(self):
+        self.window.treeWidget_Dokumente.clear()
+        self.window.treeWidget_Dokumente.setHeaderLabels(["Name", "Wert"])
+
+        items = []
+        for key, value in self.DocumentsDict.items():
+            item = self.GetChildTreeAusDict(key, value)
+            items.append(item)
+
+        self.window.treeWidget_Dokumente.insertTopLevelItems(0, items)
+
+    def GetChildTreeAusDict(self, key, myDict):
+        if isinstance(myDict, dict):
+            item = QTreeWidgetItem([key])
+
+            for keyDict, valueDict in myDict.items():
+                child = self.GetChildTreeAusDict(keyDict, valueDict)
+                item.addChild(child)
+
+            return item
+
+        else:
+            # print(f'GetChildTreeAusDict: es wird ein Dictonary erwartet. Es wurde aber übertragen: {myDict}')
+            item = QTreeWidgetItem([key, str(myDict)])
+            return item
+
+    def SchreibeTextInPDFFile(self, PDFFile, text):
+        if PDFFile is None:
+            print('SchreibeTextInPDFFile: keine File als Parameter übertragen. Abbruch!')
+            return
+
+        datei= Path(PDFFile)
+        if datei.is_file():
+            print(f"SchreibeTextInPDFFile: Datei " + PDFFile + " existiert bereits. Sie wird gelöscht.")
+            os.remove(PDFFile)
+
+        if text is None:
+            print('SchreibeTextInPDFFile: kein Text als Parameter übertragen. Abbruch!')
+            return
+
+        f = open(PDFFile, "w", encoding="utf-8")
+        f.write(text)
+        f.close()
 
 
     def AllocationDate(self):

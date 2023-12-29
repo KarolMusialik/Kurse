@@ -11,12 +11,16 @@ class MyKurs:
         print('MyKurs/ZeigeFenster: hier soll der Dialog aufgerufen werden')
         self.owindow.InitFenster(initDict)
         self.RufeAlleFunktionenAuf(isin)
+        self.SchreibeDokumenteInsDialog()
         self.owindow.zeigeFenster()
 
 
     def GetListeAllerFonds(self):
         liste = self.owindow.GetListeAllerFonds()
         return liste
+
+    def SchreibeDokumenteInsDialog(self):
+        self.owindow.SchreibeDokumenteInsDialog()
 
 
     def SetISIN(self, isin):

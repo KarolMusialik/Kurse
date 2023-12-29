@@ -2,7 +2,7 @@ import sys
 import myKurs
 from PyQt5 import QtWidgets
 import PyQt5.uic as uic
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QTreeWidgetItem
 import pandas as pd
 from pathlib import Path
 import datetime
@@ -117,13 +117,13 @@ def WechselDesEintrags(s):
     IsinInfosDictZuDialog()
 
 
-
 def GetClickedCell(row, column):
 
     isin = owindow.tableWidget_Fondsliste.item(row, 0).text()
     owindow.textEdit_isin.setText(isin)
 
     print('clicked!', isin)
+
 
 def DialogDateiAuswahlen():  # hier wird eine neue Fondsliste ausgew채hlt
     directory = parameterDict.get('workDirDateien')
@@ -132,6 +132,7 @@ def DialogDateiAuswahlen():  # hier wird eine neue Fondsliste ausgew채hlt
     parameterDict['file_Fondsliste'] = fileName
     owindow.label_NameDerDateiMitFondnamen.setText(fileName)
     LeseFondsliste()  # die neue Fondsliste wird in die Combobox geschrieben
+
 
 def RufeKurseAuf():
     if owindow.radioButton_produktion.isChecked():
@@ -258,10 +259,26 @@ def IsinInfosDictZuDialog():
 
     items = []
     for key, value in isinInfosDict.items():
-        item = QtWidgets.QTreeWidgetItem([key, str(value)])
+        item = GetChildTreeAusDict(key, value)
         items.append(item)
 
     owindow.treeWidget_IsinInfosDict.insertTopLevelItems(0, items)
+
+def GetChildTreeAusDict(key, myDict):
+    if isinstance(myDict, dict):
+        item = QTreeWidgetItem([key])
+
+        for keyDict, valueDict in myDict.items():
+            child = GetChildTreeAusDict(keyDict, valueDict)
+            item.addChild(child)
+
+        return item
+
+    else:
+        #print(f'GetChildTreeAusDict: es wird ein Dictonary erwartet. Es wurde aber 체bertragen: {myDict}')
+        item = QtWidgets.QTreeWidgetItem([key, str(myDict)])
+        return item
+
 
 aktuelleFondsliste = []  # in dieser Liste wird die Fondsliste f체r das Combobox abgelegt. Diese Liste wird gefiltert
 isinInfosDict = {}  # hier werden Infos zu der Isin abgelegt. Die Infos werden dann im Dialog gezeigt.
@@ -307,12 +324,14 @@ if len(sys.argv) >= 2:  # d.h. abgesehen vom Workdir werden weitere Arrgumente �
     oeistellung.SchreibeInEinstellung(name='isin', text=str(isin))
     oMyKurs.SetISIN(isin)
 else:
-    isin_alt = LeseLetzteEinstellung('isin')  # Lese ISIN aus dem letzten Programmaufruf
-    owindow.textEdit_isin.setText(isin_alt)  # Setzte die alte ISIN in das Dialog rein
+    #isin_alt = LeseLetzteEinstellung('isin')  # Lese ISIN aus dem letzten Programmaufruf
+    #owindow.textEdit_isin.setText(isin_alt)  # Setzte die alte ISIN in das Dialog rein
     file_Fondsliste_alt = LeseLetzteEinstellung('file_Fondsliste')  # Lese Fondsliste aus dem letzten Programmaufruf
     owindow.label_NameDerDateiMitFondnamen.setText(file_Fondsliste_alt)  # Setzte die alte Fondsliste in das Dialog rein
     parameterDict['file_Fondsliste'] = file_Fondsliste_alt
     LeseFondsliste()
+    isin_alt = LeseLetzteEinstellung('isin')  # Lese ISIN aus dem letzten Programmaufruf
+    owindow.textEdit_isin.setText(isin_alt)  # Setzte die alte ISIN in das Dialog rein
     isinInfosDict['isin'] = isin_alt
     oMyKurs.LeseInfosZuIsin(isinInfosDict)  # hier werden Infos zu der ausgew채hlten isin geholt
     IsinInfosDictZuDialog()

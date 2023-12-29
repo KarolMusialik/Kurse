@@ -322,25 +322,12 @@
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_15">
+     <widget class="QLabel" name="label_philosophyDe">
       <property name="geometry">
        <rect>
         <x>1020</x>
         <y>20</y>
-        <width>81</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Phylosophie:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_philosophyDe">
-      <property name="geometry">
-       <rect>
-        <x>1090</x>
-        <y>20</y>
-        <width>331</width>
+        <width>411</width>
         <height>61</height>
        </rect>
       </property>
@@ -372,7 +359,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="Tab_Verlauf">
       <attribute name="title">
@@ -651,6 +638,26 @@
        <property name="text">
         <string>prozentuale Aufteilung:</string>
        </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Dokumente</string>
+      </attribute>
+      <widget class="QTreeWidget" name="treeWidget_Dokumente">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>671</width>
+         <height>481</height>
+        </rect>
+       </property>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
       </widget>
      </widget>
     </widget>

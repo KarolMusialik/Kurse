@@ -1,0 +1,7 @@
+mainMaKurs: die parameter lauten: {'workDir': 'D:\\Python_Projekte\\Kurse\\', 'workDirDateien': 'D:\\Python_Projekte\\Kurse\\Dateien\\', 'workDirProtokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\', 'file_WindowEinstellungen': 'D:\\Python_Projekte\\Kurse\\WindowEinstellungen.ui', 'file_MyKursHauptfenster': 'D:\\Python_Projekte\\Kurse\\WindowKurseHauptfenster.ui', 'environment': 'produktion', 'url_environment': 'https://fsl-framework.factsheetslive.com/fslmanager', 'file_Einstellung': 'D:\\Python_Projekte\\Kurse\\einstellung.csv', 'key_Protokoll': '20231229142220', 'file_Protokoll': 'D:\\Python_Projekte\\Kurse\\Protokoll\\protokoll_20231229142220.txt'}
+RufeKurseAuf: es wurde ein Key für Einstellungen festgelegt: 20231229142239
+RufeKurseAuf: es wurde ein Key für Einstellungen festgelegt: 20231229142421
+RufeKurseAuf: es wurde ein Key für Einstellungen festgelegt: 20231229142723
+RufeKurseAuf: es wurde ein Key für Einstellungen festgelegt: 20231229142857
+RufeKurseAuf: es wurde ein Key für Einstellungen festgelegt: 20231229143032
+RufeKurseAuf: es wurde ein Key für Einstellungen festgelegt: 20231229143242
